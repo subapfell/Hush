@@ -1,11 +1,23 @@
 # Hush
 
-**AI-Powered Screenshot, Audio Transcription, and Text Processing for macOS**
+**A Free, Lightweight Alternative to Cluely & InterviewCoder - Hidden from Screen Sharing, Packed with Features, and Just 2MB**
+
+<img src="Hush/Assets.xcassets/AppIcon.appiconset/icon_512x512.png" alt="Hush App Icon" width="256" height="256">
+
+### Size Comparison
+<table>
+<tr>
+<td><img src="https://pbs.twimg.com/media/GsJiCS0XwAAOdMs.jpg" alt="Hush Size Comparison" width="400"></td>
+<td><img src="https://pbs.twimg.com/media/GsJimG6XYAAt9iM.jpg" alt="Hush vs Cluely Features" width="400"></td>
+</tr>
+</table>
 
 [![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)](https://swift.org/)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-0066CC?style=for-the-badge&logo=swift&logoColor=white)](https://developer.apple.com/xcode/swiftui/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">SO WHO WANT <a href="https://twitter.com/cluely?ref_src=twsrc%5Etfw">@CLUELY</a> / <a href="https://twitter.com/InterviewCoder?ref_src=twsrc%5Etfw">@INTERVIEWCODER</a> FOR FREE? MEAN ACTUALLY FREEEEEEEEEE <br><br>MEET HUSH, THE APP THAT'S OPEN SOURCE, FREE, AND JUST BLAZING FAST. <br><br>NO PAYWALLS. NO ADS. NO BS. <br><br>IF YOU WANT SPEED AND SIMPLICITY, THIS IS FOR YOU. <br><br>COMING SOON. <a href="https://t.co/xDH3rcd5Pi">https://t.co/xDH3rcd5Pi</a> <a href="https://t.co/3L8BT9wxHH">pic.twitter.com/3L8BT9wxHH</a></p>&mdash; Kon (@KaizooKonpaku) <a href="https://twitter.com/KaizooKonpaku/status/1927833507037934047?ref_src=twsrc%5Etfw">May 28, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 > Transform your workflow with intelligent audio transcription, screenshot analysis, and AI-powered text processing. Hush brings cutting-edge AI capabilities directly to your macOS desktop with lightning-fast performance and seamless integration.
 
@@ -20,6 +32,8 @@
 - **Highly Configurable**: 20+ keyboard shortcuts and customizable settings
 - **Resource Efficient**: < 50MB RAM usage, minimal CPU impact
 - **Native macOS**: SwiftUI-based with perfect system integration
+- **Privacy Focused**: Automatically hidden from screen sharing and recordings*
+[Not All Hidden](https://x.com/KaizooKonpaku/status/1922964050050200050)
 
 ---
 
