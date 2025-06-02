@@ -82,6 +82,15 @@ protocol HotKeyActionHandler {
     
     /// Toggles between microphone and system audio sources
     func toggleAudioSource()
+    
+    /// Toggles auto-scroll in transcript viewer
+    func toggleTranscriptAutoScroll()
+    
+    /// Scrolls transcript to top and disables auto-scroll
+    func scrollTranscriptToTop()
+    
+    /// Scrolls transcript to bottom and enables auto-scroll
+    func scrollTranscriptToBottom()
 }
 
 /// Service class responsible for managing all application hotkeys
@@ -133,6 +142,11 @@ final class HotKeyManager: ObservableObject {
     // Add property for toggle audio source hotkey
     private var toggleAudioSourceHotKey: HotKey?
     
+    // Transcript viewer specific hotkeys
+    private var transcriptAutoScrollHotKey: HotKey?
+    private var transcriptScrollTopHotKey: HotKey?
+    private var transcriptScrollBottomHotKey: HotKey?
+    
     // MARK: - Initialization
     
     /// Initializes the hot key manager
@@ -150,6 +164,7 @@ final class HotKeyManager: ObservableObject {
         setupAppControlHotKeys(handler: handler)
         setupScreenshotNavigationHotKeys(handler: handler)
         setupScrollHotKeys(handler: handler)
+        setupTranscriptHotKeys(handler: handler)
         setupWindowHotKeys(handler: handler)
         setupAppManagementHotKeys(handler: handler)
     }
@@ -195,6 +210,11 @@ final class HotKeyManager: ObservableObject {
         
         // Toggle audio source
         toggleAudioSourceHotKey = nil
+        
+        // Transcript viewer hotkeys
+        transcriptAutoScrollHotKey = nil
+        transcriptScrollTopHotKey = nil
+        transcriptScrollBottomHotKey = nil
     }
     
     // MARK: - Private Methods
@@ -338,6 +358,28 @@ final class HotKeyManager: ObservableObject {
             }
         }
         }
+        
+    /// Sets up transcript viewer specific hotkeys
+    /// - Parameter handler: The action handler
+    private func setupTranscriptHotKeys(handler: HotKeyActionHandler) {
+        // Toggle auto-scroll in transcript (⌘⌃Space)
+        transcriptAutoScrollHotKey = HotKey(key: .space, modifiers: [.command, .control])
+        transcriptAutoScrollHotKey?.keyDownHandler = {
+            handler.toggleTranscriptAutoScroll()
+        }
+        
+        // Scroll transcript to top (⌘⌃↑)
+        transcriptScrollTopHotKey = HotKey(key: .upArrow, modifiers: [.command, .control])
+        transcriptScrollTopHotKey?.keyDownHandler = {
+            handler.scrollTranscriptToTop()
+        }
+        
+        // Scroll transcript to bottom (⌘⌃↓)
+        transcriptScrollBottomHotKey = HotKey(key: .downArrow, modifiers: [.command, .control])
+        transcriptScrollBottomHotKey?.keyDownHandler = {
+            handler.scrollTranscriptToBottom()
+        }
+    }
         
     /// Sets up window management hotkeys
     /// - Parameter handler: The action handler

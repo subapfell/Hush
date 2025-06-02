@@ -44,7 +44,8 @@ struct ContentView: View {
                     TranscriptView(
                         transcript: appState.transcriptText,
                         isRecording: appState.isTranscribing,
-                        hasScreenshots: !appState.capturedImages.isEmpty
+                        hasScreenshots: !appState.capturedImages.isEmpty,
+                        isAutoScrollEnabled: $appState.isAutoScrollEnabled
                     )
                     .transition(.opacity)
                     

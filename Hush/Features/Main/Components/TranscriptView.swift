@@ -13,7 +13,7 @@ struct TranscriptView: View {
     let hasScreenshots: Bool
     
     /// Whether auto-scroll is enabled
-    @State private var isAutoScrollEnabled: Bool = true
+    @Binding var isAutoScrollEnabled: Bool
     
     /// Previous transcript length to detect new content
     @State private var previousTranscriptLength: Int = 0
@@ -158,43 +158,30 @@ struct TranscriptView: View {
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
         .accessibilityHint(isRecording ? "Currently recording audio" : "Recording paused")
-        .onKeyPress(.space, modifiers: [.command, .control]) {
-            // Toggle auto-scroll
-            isAutoScrollEnabled.toggle()
-            if isAutoScrollEnabled, let proxy = scrollProxy {
-                withAnimation(.easeOut(duration: 0.3)) {
-                    proxy.scrollTo("transcriptText", anchor: .bottom)
-                }
-            }
-            return .handled
-        }
-        .onKeyPress(.upArrow, modifiers: [.command, .control]) {
-            // Scroll to top
+        .onReceive(NotificationCenter.default.publisher(for: .scrollTranscriptToTop)) { _ in
             if let proxy = scrollProxy {
-                isAutoScrollEnabled = false
                 withAnimation(.easeOut(duration: 0.3)) {
                     proxy.scrollTo("transcriptText", anchor: .top)
                 }
             }
-            return .handled
         }
-        .onKeyPress(.downArrow, modifiers: [.command, .control]) {
-            // Scroll to bottom and enable auto-scroll
+        .onReceive(NotificationCenter.default.publisher(for: .scrollTranscriptToBottom)) { _ in
             if let proxy = scrollProxy {
-                isAutoScrollEnabled = true
                 withAnimation(.easeOut(duration: 0.3)) {
                     proxy.scrollTo("transcriptText", anchor: .bottom)
                 }
             }
-            return .handled
         }
     }
 }
 
 #Preview {
-    TranscriptView(
+    @State var isAutoScrollEnabled = true
+    
+    return TranscriptView(
         transcript: "This is a sample transcript of what the speech recognition might capture. It demonstrates how the text would appear in the transcript view. This is a longer text to show the scrolling behavior when there's more content than can fit in the view. Users can now scroll up and down manually, and control whether new content automatically scrolls to the bottom.",
         isRecording: true,
-        hasScreenshots: true
+        hasScreenshots: true,
+        isAutoScrollEnabled: $isAutoScrollEnabled
     )
 }
