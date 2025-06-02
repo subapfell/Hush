@@ -75,35 +75,6 @@ struct TranscriptView: View {
                                     }
                             )
                         }
-                        
-                        // Auto-scroll control button (bottom right)
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                
-                                Button(action: {
-                                    isAutoScrollEnabled.toggle()
-                                }) {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: isAutoScrollEnabled ? "arrow.down.doc.fill" : "arrow.down.doc")
-                                            .font(.system(size: 10))
-                                        
-                                        Text(isAutoScrollEnabled ? "AUTO" : "MANUAL")
-                                            .font(.system(size: 9, weight: .medium))
-                                    }
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 4)
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(4)
-                                    .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .help("Toggle auto-scroll (⌘⌃Space)")
-                                .padding(.trailing, 8)
-                                .padding(.bottom, 8)
-                            }
-                        }
                     }
                     
                     // Hint text for non-empty transcripts
@@ -131,19 +102,19 @@ struct TranscriptView: View {
                             
                             // Keyboard shortcuts hint
                             HStack(spacing: 0) {
-                                Text("Auto-scroll: ")
+                                Text("Scroll to top: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⌃Space")
+                                Text("⇧↑")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                                 
-                                Text(" • Scroll: ")
+                                Text(" • Scroll to bottom: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⌃↑/↓")
+                                Text("⇧↓")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
