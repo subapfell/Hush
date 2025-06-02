@@ -149,11 +149,11 @@ struct TranscriptView: View {
                                 }
                                 
                                 HStack(spacing: 0) {
-                                    Text("Fast scroll: ")
+                                    Text("With Shift: ")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                     
-                                    Text("⇧↑/↓")
+                                    Text("⌘⇧↑/↓")
                                         .font(.caption.bold())
                                         .foregroundColor(.blue)
                                     
@@ -182,8 +182,28 @@ struct TranscriptView: View {
             isAutoScrollEnabled.toggle()
             return .handled
         }
+        .onKeyPress(.space, modifiers: [.command, .shift]) {
+            // Command+Shift+Space: Force enable auto-scroll and scroll to bottom
+            isAutoScrollEnabled = true
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+            }
+            return .handled
+        }
         .onKeyPress(.upArrow, modifiers: .command) {
             // Command+Up: Scroll to top
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    proxy.scrollTo("transcriptText", anchor: .top)
+                }
+                isAutoScrollEnabled = false
+            }
+            return .handled
+        }
+        .onKeyPress(.upArrow, modifiers: [.command, .shift]) {
+            // Command+Shift+Up: Scroll to top and force disable auto-scroll
             if let proxy = scrollProxy {
                 withAnimation(.easeOut(duration: 0.5)) {
                     proxy.scrollTo("transcriptText", anchor: .top)
@@ -199,6 +219,16 @@ struct TranscriptView: View {
                     proxy.scrollTo("transcriptText", anchor: .bottom)
                 }
                 isAutoScrollEnabled = true
+            }
+            return .handled
+        }
+        .onKeyPress(.downArrow, modifiers: [.command, .shift]) {
+            // Command+Shift+Down: Scroll to bottom without changing auto-scroll state
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+                // Keep current auto-scroll state unchanged
             }
             return .handled
         }
@@ -222,31 +252,7 @@ struct TranscriptView: View {
             scrollByLine(direction: .down)
             return .handled
         }
-        .onKeyPress(.upArrow, modifiers: .shift) {
-            // Shift+Up: Scroll up by multiple lines (fast scroll)
-            scrollByMultipleLines(direction: .up)
-            return .handled
-        }
-        .onKeyPress(.downArrow, modifiers: .shift) {
-            // Shift+Down: Scroll down by multiple lines (fast scroll)
-            scrollByMultipleLines(direction: .down)
-            return .handled
-        }
-        .onKeyPress(.pageUp, modifiers: .shift) {
-            // Shift+Page Up: Scroll to top with auto-scroll disabled
-            scrollToTopWithAutoScrollDisabled()
-            return .handled
-        }
-        .onKeyPress(.pageDown, modifiers: .shift) {
-            // Shift+Page Down: Scroll to bottom without enabling auto-scroll
-            scrollToBottomWithoutAutoScroll()
-            return .handled
-        }
-        .onKeyPress(.space, modifiers: [.command, .shift]) {
-            // Command+Shift+Space: Force enable auto-scroll and scroll to bottom
-            forceEnableAutoScrollAndScrollToBottom()
-            return .handled
-        }
+
     }
     
     // MARK: - Helper Methods
@@ -306,58 +312,7 @@ struct TranscriptView: View {
         }
     }
     
-    /// Scroll by multiple lines (fast scroll)
-    /// - Parameter direction: Direction to scroll
-    private func scrollByMultipleLines(direction: ScrollDirection) {
-        // Disable auto-scroll when manually scrolling
-        isAutoScrollEnabled = false
-        
-        guard let proxy = scrollProxy else { return }
-        
-        // Fast scroll with slightly longer animation
-        withAnimation(.easeOut(duration: 0.2)) {
-            switch direction {
-            case .up:
-                // Fast scroll towards top
-                proxy.scrollTo("transcriptText", anchor: .top)
-            case .down:
-                // Fast scroll towards bottom
-                proxy.scrollTo("transcriptText", anchor: .bottom)
-            }
-        }
-    }
-    
-    /// Scroll to top with auto-scroll explicitly disabled
-    private func scrollToTopWithAutoScrollDisabled() {
-        isAutoScrollEnabled = false
-        
-        guard let proxy = scrollProxy else { return }
-        
-        withAnimation(.easeOut(duration: 0.4)) {
-            proxy.scrollTo("transcriptText", anchor: .top)
-        }
-    }
-    
-    /// Scroll to bottom without enabling auto-scroll
-    private func scrollToBottomWithoutAutoScroll() {
-        // Keep current auto-scroll state (don't enable it)
-        guard let proxy = scrollProxy else { return }
-        
-        withAnimation(.easeOut(duration: 0.4)) {
-            proxy.scrollTo("transcriptText", anchor: .bottom)
-        }
-    }
-    
-    /// Force enable auto-scroll and scroll to bottom
-    private func forceEnableAutoScrollAndScrollToBottom() {
-        isAutoScrollEnabled = true
-        
-        guard let proxy = scrollProxy else { return }
-        
-        withAnimation(.easeOut(duration: 0.3)) {
-            proxy.scrollTo("transcriptText", anchor: .bottom)
-        }
-    }
+
 }
 
 #Preview {
