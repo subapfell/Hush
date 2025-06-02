@@ -47,6 +47,24 @@ final class SystemAudioRecorder: ObservableObject {
         
         logger.debug("Starting system audio recording")
         
+        // Check permissions first
+        let permission = AudioRecordingPermission()
+        if permission.status == .denied {
+            logger.error("Audio recording permission denied")
+            let alert = NSAlert()
+            alert.messageText = "Audio Recording Permission Required"
+            alert.informativeText = "Please grant audio recording permission in System Preferences > Security & Privacy > Privacy > Microphone and Screen Recording."
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "Open System Preferences")
+            alert.addButton(withTitle: "Cancel")
+            
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!)
+            }
+            return
+        }
+        
         do {
             // Find the system audio process
             if let systemProcess = findSystemAudioProcess() {
@@ -54,14 +72,24 @@ final class SystemAudioRecorder: ObservableObject {
                 isRecording = true
                 // Only show transcript viewer if enabled in preferences
                 AppState.shared.showTranscript = AppPreferences.shared.showTranscriptionViewer
+                logger.info("Successfully started system audio recording for process: \(systemProcess.name)")
             } else {
                 logger.error("No system audio process found")
+                let alert = NSAlert()
+                alert.messageText = "No Audio Processes Found"
+                alert.informativeText = "No system audio processes are currently available. Please ensure audio is playing from another application and try again."
+                alert.alertStyle = .warning
+                alert.runModal()
                 throw NSError(domain: "SystemAudioRecorderErrorDomain", code: 1, 
                               userInfo: [NSLocalizedDescriptionKey: "No system audio process found"])
             }
         } catch {
             logger.error("Failed to start system audio recording: \(error.localizedDescription)")
-            NSAlert(error: error).runModal()
+            let alert = NSAlert()
+            alert.messageText = "System Audio Recording Failed"
+            alert.informativeText = "Error: \(error.localizedDescription)\n\nThis may be due to insufficient permissions or system restrictions. Please check that the app has the necessary permissions in System Preferences."
+            alert.alertStyle = .critical
+            alert.runModal()
         }
     }
     

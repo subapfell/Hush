@@ -8,32 +8,79 @@
 
 /* Begin PBXBuildFile section */
 		0EFEE90B2DE19B2C00C6E799 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 0EFEE90A2DE19B2C00C6E799 /* HotKey */; };
+		0E94230F2DE14CD300A939ED /* HushApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D12DE14CD300A939ED /* HushApp.swift */; };
+		0E9423102DE14CD300A939ED /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D22DE14CD300A939ED /* main.swift */; };
+		0E9423112DE14CD300A939ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E9422D32DE14CD300A939ED /* Assets.xcassets */; };
+		0E9423122DE14CD300A939ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D42DE14CD300A939ED /* Constants.swift */; };
+		0E9423132DE14CD300A939ED /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D52DE14CD300A939ED /* NotificationExtension.swift */; };
+		0E9423142DE14CD300A939ED /* WindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D62DE14CD300A939ED /* WindowExtension.swift */; };
+		0E9423152DE14CD300A939ED /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D72DE14CD300A939ED /* AppState.swift */; };
+		0E9423162DE14CD300A939ED /* ArrowDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D82DE14CD300A939ED /* ArrowDirection.swift */; };
+		0E9423172DE14CD300A939ED /* StreamContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422D92DE14CD300A939ED /* StreamContent.swift */; };
+		0E9423182DE14CD300A939ED /* ScrollViewFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DA2DE14CD300A939ED /* ScrollViewFinder.swift */; };
+		0E9423192DE14CD300A939ED /* StreamContentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DB2DE14CD300A939ED /* StreamContentBuilder.swift */; };
+		0E94231A2DE14CD300A939ED /* AudioSourceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DC2DE14CD300A939ED /* AudioSourceButton.swift */; };
+		0E94231B2DE14CD300A939ED /* ResultViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DD2DE14CD300A939ED /* ResultViews.swift */; };
+		0E94231C2DE14CD300A939ED /* ScreenshotGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DE2DE14CD300A939ED /* ScreenshotGridView.swift */; };
+		0E94231D2DE14CD300A939ED /* StreamContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422DF2DE14CD300A939ED /* StreamContentView.swift */; };
+		0E94231E2DE14CD300A939ED /* ToolbarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E02DE14CD300A939ED /* ToolbarComponents.swift */; };
+		0E94231F2DE14CD300A939ED /* TranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E12DE14CD300A939ED /* TranscriptView.swift */; };
+		0E9423202DE14CD300A939ED /* CapturedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E22DE14CD300A939ED /* CapturedImage.swift */; };
+		0E9423212DE14CD300A939ED /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E32DE14CD300A939ED /* MainViewModel.swift */; };
+		0E9423222DE14CD300A939ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E42DE14CD300A939ED /* ContentView.swift */; };
+		0E9423232DE14CD300A939ED /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E52DE14CD300A939ED /* SettingsViewModel.swift */; };
+		0E9423242DE14CD300A939ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E62DE14CD300A939ED /* SettingsView.swift */; };
+		0E9423252DE14CD300A939ED /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422E92DE14CD300A939ED /* GeminiService.swift */; };
+		0E9423262DE14CD300A939ED /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422EA2DE14CD300A939ED /* HotKeyManager.swift */; };
+		0E9423272DE14CD300A939ED /* AudioProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422EB2DE14CD300A939ED /* AudioProcessController.swift */; };
+		0E9423282DE14CD300A939ED /* AudioRecordingPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422EC2DE14CD300A939ED /* AudioRecordingPermission.swift */; };
+		0E9423292DE14CD300A939ED /* CoreAudioUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422ED2DE14CD300A939ED /* CoreAudioUtils.swift */; };
+		0E94232A2DE14CD300A939ED /* ProcessTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422EE2DE14CD300A939ED /* ProcessTap.swift */; };
+		0E94232B2DE14CD300A939ED /* ScreenshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422EF2DE14CD300A939ED /* ScreenshotService.swift */; };
+		0E94232C2DE14CD300A939ED /* SystemAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422F02DE14CD300A939ED /* SystemAudioRecorder.swift */; };
+		0E94232D2DE14CD300A939ED /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422F12DE14CD300A939ED /* TranscriptionService.swift */; };
+		0E94232E2DE14CD300A939ED /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9422F22DE14CD300A939ED /* AppPreferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0E9422CE2DE14CD300A939ED /* Hush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hush.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E9422D12DE14CD300A939ED /* HushApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HushApp.swift; sourceTree = "<group>"; };
+		0E9422D22DE14CD300A939ED /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0E9422D32DE14CD300A939ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E9422D42DE14CD300A939ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0E9422D52DE14CD300A939ED /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
+		0E9422D62DE14CD300A939ED /* WindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowExtension.swift; sourceTree = "<group>"; };
+		0E9422D72DE14CD300A939ED /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		0E9422D82DE14CD300A939ED /* ArrowDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDirection.swift; sourceTree = "<group>"; };
+		0E9422D92DE14CD300A939ED /* StreamContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamContent.swift; sourceTree = "<group>"; };
+		0E9422DA2DE14CD300A939ED /* ScrollViewFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewFinder.swift; sourceTree = "<group>"; };
+		0E9422DB2DE14CD300A939ED /* StreamContentBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamContentBuilder.swift; sourceTree = "<group>"; };
+		0E9422DC2DE14CD300A939ED /* AudioSourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSourceButton.swift; sourceTree = "<group>"; };
+		0E9422DD2DE14CD300A939ED /* ResultViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViews.swift; sourceTree = "<group>"; };
+		0E9422DE2DE14CD300A939ED /* ScreenshotGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotGridView.swift; sourceTree = "<group>"; };
+		0E9422DF2DE14CD300A939ED /* StreamContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamContentView.swift; sourceTree = "<group>"; };
+		0E9422E02DE14CD300A939ED /* ToolbarComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarComponents.swift; sourceTree = "<group>"; };
+		0E9422E12DE14CD300A939ED /* TranscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptView.swift; sourceTree = "<group>"; };
+		0E9422E22DE14CD300A939ED /* CapturedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturedImage.swift; sourceTree = "<group>"; };
+		0E9422E32DE14CD300A939ED /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		0E9422E42DE14CD300A939ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0E9422E52DE14CD300A939ED /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		0E9422E62DE14CD300A939ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0E9422E72DE14CD300A939ED /* Hush.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hush.entitlements; sourceTree = "<group>"; };
+		0E9422E82DE14CD300A939ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E9422E92DE14CD300A939ED /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
+		0E9422EA2DE14CD300A939ED /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
+		0E9422EB2DE14CD300A939ED /* AudioProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProcessController.swift; sourceTree = "<group>"; };
+		0E9422EC2DE14CD300A939ED /* AudioRecordingPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingPermission.swift; sourceTree = "<group>"; };
+		0E9422ED2DE14CD300A939ED /* CoreAudioUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAudioUtils.swift; sourceTree = "<group>"; };
+		0E9422EE2DE14CD300A939ED /* ProcessTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessTap.swift; sourceTree = "<group>"; };
+		0E9422EF2DE14CD300A939ED /* ScreenshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotService.swift; sourceTree = "<group>"; };
+		0E9422F02DE14CD300A939ED /* SystemAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAudioRecorder.swift; sourceTree = "<group>"; };
+		0E9422F12DE14CD300A939ED /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
+		0E9422F22DE14CD300A939ED /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E7EEE642DE5EAAF00FE2E2C /* Exceptions for "Hush" folder in "Hush" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 0E9422CD2DE14CD300A939ED /* Hush */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E9422D02DE14CD300A939ED /* Hush */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E7EEE642DE5EAAF00FE2E2C /* Exceptions for "Hush" folder in "Hush" target */,
-			);
-			path = Hush;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0E9422CB2DE14CD300A939ED /* Frameworks */ = {
@@ -63,6 +110,191 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		0E9422D02DE14CD300A939ED /* Hush */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422F32DE14CD300A939ED /* App */,
+				0E9422D32DE14CD300A939ED /* Assets.xcassets */,
+				0E9422F42DE14CD300A939ED /* Core */,
+				0E9422F52DE14CD300A939ED /* Features */,
+				0E9422E72DE14CD300A939ED /* Hush.entitlements */,
+				0E9422E82DE14CD300A939ED /* Info.plist */,
+				0E9422F62DE14CD300A939ED /* Services */,
+				0E9422F72DE14CD300A939ED /* Storage */,
+			);
+			path = Hush;
+			sourceTree = "<group>";
+		};
+		0E9422F32DE14CD300A939ED /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422D12DE14CD300A939ED /* HushApp.swift */,
+				0E9422D22DE14CD300A939ED /* main.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		0E9422F42DE14CD300A939ED /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422F82DE14CD300A939ED /* Constants */,
+				0E9422F92DE14CD300A939ED /* Extensions */,
+				0E9422FA2DE14CD300A939ED /* Models */,
+				0E9422FB2DE14CD300A939ED /* Utils */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		0E9422F52DE14CD300A939ED /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422FC2DE14CD300A939ED /* Main */,
+				0E9422FD2DE14CD300A939ED /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		0E9422F62DE14CD300A939ED /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E92DE14CD300A939ED /* GeminiService.swift */,
+				0E9422EA2DE14CD300A939ED /* HotKeyManager.swift */,
+				0E9422FE2DE14CD300A939ED /* ProcessTap */,
+				0E9422EF2DE14CD300A939ED /* ScreenshotService.swift */,
+				0E9422F02DE14CD300A939ED /* SystemAudioRecorder.swift */,
+				0E9422F12DE14CD300A939ED /* TranscriptionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0E9422F72DE14CD300A939ED /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422F22DE14CD300A939ED /* AppPreferences.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		0E9422F82DE14CD300A939ED /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422D42DE14CD300A939ED /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		0E9422F92DE14CD300A939ED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422D52DE14CD300A939ED /* NotificationExtension.swift */,
+				0E9422D62DE14CD300A939ED /* WindowExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0E9422FA2DE14CD300A939ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422D72DE14CD300A939ED /* AppState.swift */,
+				0E9422D82DE14CD300A939ED /* ArrowDirection.swift */,
+				0E9422D92DE14CD300A939ED /* StreamContent.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E9422FB2DE14CD300A939ED /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422DA2DE14CD300A939ED /* ScrollViewFinder.swift */,
+				0E9422DB2DE14CD300A939ED /* StreamContentBuilder.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0E9422FC2DE14CD300A939ED /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422FF2DE14CD300A939ED /* Components */,
+				0E94230A2DE14CD300A939ED /* Models */,
+				0E94230B2DE14CD300A939ED /* ViewModels */,
+				0E94230C2DE14CD300A939ED /* Views */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		0E9422FD2DE14CD300A939ED /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0E94230D2DE14CD300A939ED /* ViewModels */,
+				0E94230E2DE14CD300A939ED /* Views */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0E9422FE2DE14CD300A939ED /* ProcessTap */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422EB2DE14CD300A939ED /* AudioProcessController.swift */,
+				0E9422EC2DE14CD300A939ED /* AudioRecordingPermission.swift */,
+				0E9422ED2DE14CD300A939ED /* CoreAudioUtils.swift */,
+				0E9422EE2DE14CD300A939ED /* ProcessTap.swift */,
+			);
+			path = ProcessTap;
+			sourceTree = "<group>";
+		};
+		0E9422FF2DE14CD300A939ED /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422DC2DE14CD300A939ED /* AudioSourceButton.swift */,
+				0E9422DD2DE14CD300A939ED /* ResultViews.swift */,
+				0E9422DE2DE14CD300A939ED /* ScreenshotGridView.swift */,
+				0E9422DF2DE14CD300A939ED /* StreamContentView.swift */,
+				0E9422E02DE14CD300A939ED /* ToolbarComponents.swift */,
+				0E9422E12DE14CD300A939ED /* TranscriptView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0E94230A2DE14CD300A939ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E22DE14CD300A939ED /* CapturedImage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E94230B2DE14CD300A939ED /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E32DE14CD300A939ED /* MainViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0E94230C2DE14CD300A939ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E42DE14CD300A939ED /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0E94230D2DE14CD300A939ED /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E52DE14CD300A939ED /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0E94230E2DE14CD300A939ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0E9422E62DE14CD300A939ED /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +309,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				0E9422D02DE14CD300A939ED /* Hush */,
 			);
 			name = Hush;
 			packageProductDependencies = (
@@ -131,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E9423112DE14CD300A939ED /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,13 +371,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E94230F2DE14CD300A939ED /* HushApp.swift in Sources */,
+				0E9423102DE14CD300A939ED /* main.swift in Sources */,
+				0E9423122DE14CD300A939ED /* Constants.swift in Sources */,
+				0E9423132DE14CD300A939ED /* NotificationExtension.swift in Sources */,
+				0E9423142DE14CD300A939ED /* WindowExtension.swift in Sources */,
+				0E9423152DE14CD300A939ED /* AppState.swift in Sources */,
+				0E9423162DE14CD300A939ED /* ArrowDirection.swift in Sources */,
+				0E9423172DE14CD300A939ED /* StreamContent.swift in Sources */,
+				0E9423182DE14CD300A939ED /* ScrollViewFinder.swift in Sources */,
+				0E9423192DE14CD300A939ED /* StreamContentBuilder.swift in Sources */,
+				0E94231A2DE14CD300A939ED /* AudioSourceButton.swift in Sources */,
+				0E94231B2DE14CD300A939ED /* ResultViews.swift in Sources */,
+				0E94231C2DE14CD300A939ED /* ScreenshotGridView.swift in Sources */,
+				0E94231D2DE14CD300A939ED /* StreamContentView.swift in Sources */,
+				0E94231E2DE14CD300A939ED /* ToolbarComponents.swift in Sources */,
+				0E94231F2DE14CD300A939ED /* TranscriptView.swift in Sources */,
+				0E9423202DE14CD300A939ED /* CapturedImage.swift in Sources */,
+				0E9423212DE14CD300A939ED /* MainViewModel.swift in Sources */,
+				0E9423222DE14CD300A939ED /* ContentView.swift in Sources */,
+				0E9423232DE14CD300A939ED /* SettingsViewModel.swift in Sources */,
+				0E9423242DE14CD300A939ED /* SettingsView.swift in Sources */,
+				0E9423252DE14CD300A939ED /* GeminiService.swift in Sources */,
+				0E9423262DE14CD300A939ED /* HotKeyManager.swift in Sources */,
+				0E9423272DE14CD300A939ED /* AudioProcessController.swift in Sources */,
+				0E9423282DE14CD300A939ED /* AudioRecordingPermission.swift in Sources */,
+				0E9423292DE14CD300A939ED /* CoreAudioUtils.swift in Sources */,
+				0E94232A2DE14CD300A939ED /* ProcessTap.swift in Sources */,
+				0E94232B2DE14CD300A939ED /* ScreenshotService.swift in Sources */,
+				0E94232C2DE14CD300A939ED /* SystemAudioRecorder.swift in Sources */,
+				0E94232D2DE14CD300A939ED /* TranscriptionService.swift in Sources */,
+				0E94232E2DE14CD300A939ED /* AppPreferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		0E9422D82DE14CD400A939ED /* Debug */ = {
+		0E94232F2DE14CD400A939ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -207,12 +468,12 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG ENABLE_TCC_SPI $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		0E9422D92DE14CD400A939ED /* Release */ = {
+		0E9423302DE14CD400A939ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -265,11 +526,12 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "ENABLE_TCC_SPI $(inherited)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
-		0E9422DB2DE14CD400A939ED /* Debug */ = {
+		0E9423312DE14CD400A939ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -305,7 +567,7 @@
 			};
 			name = Debug;
 		};
-		0E9422DC2DE14CD400A939ED /* Release */ = {
+		0E9423322DE14CD400A939ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -347,8 +609,8 @@
 		0E9422C92DE14CD300A939ED /* Build configuration list for PBXProject "Hush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E9422D82DE14CD400A939ED /* Debug */,
-				0E9422D92DE14CD400A939ED /* Release */,
+				0E94232F2DE14CD400A939ED /* Debug */,
+				0E9423302DE14CD400A939ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -356,8 +618,8 @@
 		0E9422DA2DE14CD400A939ED /* Build configuration list for PBXNativeTarget "Hush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E9422DB2DE14CD400A939ED /* Debug */,
-				0E9422DC2DE14CD400A939ED /* Release */,
+				0E9423312DE14CD400A939ED /* Debug */,
+				0E9423322DE14CD400A939ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

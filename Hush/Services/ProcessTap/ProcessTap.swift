@@ -96,8 +96,11 @@ final class ProcessTap {
         var err = AudioHardwareCreateProcessTap(tapDescription, &tapID)
 
         guard err == noErr else {
-            errorMessage = "Process tap creation failed with error \(err)"
-            return
+            let errorMsg = "Process tap creation failed with error \(err). This may be due to insufficient permissions or system restrictions."
+            errorMessage = errorMsg
+            logger.error("\(errorMsg)")
+            throw NSError(domain: "ProcessTapErrorDomain", code: Int(err), 
+                          userInfo: [NSLocalizedDescriptionKey: errorMsg])
         }
 
         logger.debug("Created process tap #\(tapID, privacy: .public)")
@@ -135,7 +138,10 @@ final class ProcessTap {
         aggregateDeviceID = AudioObjectID.unknown
         err = AudioHardwareCreateAggregateDevice(description as CFDictionary, &aggregateDeviceID)
         guard err == noErr else {
-            throw "Failed to create aggregate device: \(err)"
+            let errorMsg = "Failed to create aggregate device: \(err). This may be due to insufficient permissions or system audio restrictions."
+            logger.error("\(errorMsg)")
+            throw NSError(domain: "ProcessTapErrorDomain", code: Int(err), 
+                          userInfo: [NSLocalizedDescriptionKey: errorMsg])
         }
 
         logger.debug("Created aggregate device #\(self.aggregateDeviceID, privacy: .public)")
