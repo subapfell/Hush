@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// A view that displays live audio transcription
 struct TranscriptView: View {
@@ -10,6 +11,15 @@ struct TranscriptView: View {
     
     /// Whether screenshots are available
     let hasScreenshots: Bool
+    
+    /// Whether auto-scroll is enabled
+    @Binding var isAutoScrollEnabled: Bool
+    
+    /// Previous transcript length to detect new content
+    @State private var previousTranscriptLength: Int = 0
+    
+    /// ScrollViewReader proxy for programmatic scrolling
+    @State private var scrollProxy: ScrollViewProxy?
     
     var body: some View {
         ZStack {
@@ -24,40 +34,116 @@ struct TranscriptView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 VStack(spacing: 0) {
-                    ScrollViewReader { proxy in
-                        ScrollView {
-                            Text(transcript)
-                                .font(.body)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .textSelection(.enabled)
-                                .id("transcriptText")
+                    ZStack {
+                        ScrollViewReader { proxy in
+                            ScrollView {
+                                Text(transcript)
+                                    .font(.body)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 12)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .textSelection(.enabled)
+                                    .id("transcriptText")
+                            }
+                            .onAppear {
+                                // Store the scroll proxy for keyboard shortcuts
+                                scrollProxy = proxy
+                            }
+                            .onChange(of: transcript) {
+                                // Only auto-scroll if enabled and new content was added
+                                let newLength = transcript.count
+                                if isAutoScrollEnabled && newLength > previousTranscriptLength {
+                                    withAnimation(.easeOut(duration: 0.3)) {
+                                        proxy.scrollTo("transcriptText", anchor: .bottom)
+                                    }
+                                }
+                                previousTranscriptLength = newLength
+                            }
+                            .onChange(of: isAutoScrollEnabled) {
+                                // Scroll to bottom when auto-scroll is re-enabled
+                                if isAutoScrollEnabled {
+                                    withAnimation(.easeOut(duration: 0.3)) {
+                                        proxy.scrollTo("transcriptText", anchor: .bottom)
+                                    }
+                                }
+                            }
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { _ in
+                                        // Disable auto-scroll when user manually scrolls
+                                        isAutoScrollEnabled = false
+                                    }
+                            )
                         }
-                        .onChange(of: transcript) {
-                            withAnimation {
-                                proxy.scrollTo("transcriptText", anchor: .bottom)
+                        
+                        // Auto-scroll control button (bottom right)
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                
+                                Button(action: {
+                                    isAutoScrollEnabled.toggle()
+                                }) {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: isAutoScrollEnabled ? "arrow.down.doc.fill" : "arrow.down.doc")
+                                            .font(.system(size: 10))
+                                        
+                                        Text(isAutoScrollEnabled ? "AUTO" : "MANUAL")
+                                            .font(.system(size: 9, weight: .medium))
+                                    }
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 4)
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(4)
+                                    .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Toggle auto-scroll (⌘⌃Space)")
+                                .padding(.trailing, 8)
+                                .padding(.bottom, 8)
                             }
                         }
                     }
                     
                     // Hint text for non-empty transcripts
                     if !transcript.isEmpty && !isRecording {
-                        HStack(spacing: 0) {
-                            Text("Press ")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("⌘↩")
-                                .font(.caption.bold())
-                                .foregroundColor(.blue)
-                            
-                            Text(" to process transcript")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                        VStack(spacing: 2) {
+                            HStack(spacing: 0) {
+                                Text("Press ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                                 
-                            if hasScreenshots {
-                                Text(" with screenshots")
+                                Text("⌘↩")
+                                    .font(.caption.bold())
+                                    .foregroundColor(.blue)
+                                
+                                Text(" to process transcript")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    
+                                if hasScreenshots {
+                                    Text(" with screenshots")
+                                        .font(.caption.bold())
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            
+                            // Keyboard shortcuts hint
+                            HStack(spacing: 0) {
+                                Text("Auto-scroll: ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                Text("⌘⌃Space")
+                                    .font(.caption.bold())
+                                    .foregroundColor(.blue)
+                                
+                                Text(" • Scroll: ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                Text("⌘⌃↑/↓")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
@@ -72,14 +158,30 @@ struct TranscriptView: View {
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
         .accessibilityHint(isRecording ? "Currently recording audio" : "Recording paused")
+        .onReceive(NotificationCenter.default.publisher(for: .scrollTranscriptToTop)) { _ in
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .top)
+                }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .scrollTranscriptToBottom)) { _ in
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    TranscriptView(
-        transcript: "This is a sample transcript of what the speech recognition might capture. It demonstrates how the text would appear in the transcript view.",
+    @State var isAutoScrollEnabled = true
+    
+    return TranscriptView(
+        transcript: "This is a sample transcript of what the speech recognition might capture. It demonstrates how the text would appear in the transcript view. This is a longer text to show the scrolling behavior when there's more content than can fit in the view. Users can now scroll up and down manually, and control whether new content automatically scrolls to the bottom.",
         isRecording: true,
-        hasScreenshots: true
+        hasScreenshots: true,
+        isAutoScrollEnabled: $isAutoScrollEnabled
     )
-} 
- 
+}

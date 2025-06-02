@@ -176,8 +176,8 @@ final class TranscriptionService: NSObject, ObservableObject {
     func stopRecording() {
         // Stop audio engine and remove tap if using microphone
         if audioEngine.isRunning {
-        audioEngine.stop()
-        audioEngine.inputNode.removeTap(onBus: 0)
+            audioEngine.stop()
+            audioEngine.inputNode.removeTap(onBus: 0)
         }
         
         // End recognition request
