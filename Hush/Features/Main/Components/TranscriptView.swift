@@ -181,11 +181,7 @@ struct TranscriptView: View {
             }
             return .handled
         }
-
     }
-
-    
-
 }
 
 #Preview {
@@ -194,5 +190,4 @@ struct TranscriptView: View {
         isRecording: true,
         hasScreenshots: true
     )
-} 
- 
+}
