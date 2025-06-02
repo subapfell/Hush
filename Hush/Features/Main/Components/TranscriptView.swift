@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// A view that displays live audio transcription
 struct TranscriptView: View {

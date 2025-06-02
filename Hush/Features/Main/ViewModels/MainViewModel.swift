@@ -1,5 +1,7 @@
 import SwiftUI
 import Combine
+import Foundation
+import AppKit
 
 /// ViewModel for the main application screen
 final class MainViewModel: ObservableObject, HotKeyActionHandler {

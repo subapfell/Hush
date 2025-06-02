@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// Represents a captured screenshot image with a unique identifier
 struct CapturedImage: Identifiable, Hashable {
