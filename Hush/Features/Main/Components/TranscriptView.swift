@@ -18,7 +18,7 @@ struct TranscriptView: View {
     @State private var previousTranscriptLength: Int = 0
     
     /// ScrollViewReader proxy for programmatic scrolling
-    @State private var scrollProxy: ScrollViewReader.ScrollViewProxy?
+    @State private var scrollProxy: ScrollViewProxy?
     
     var body: some View {
         ZStack {
