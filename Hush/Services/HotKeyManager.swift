@@ -298,9 +298,9 @@ final class HotKeyManager: ObservableObject {
     /// Sets up scroll-related hotkeys
     /// - Parameter handler: The action handler
     private func setupScrollHotKeys(handler: HotKeyActionHandler) {
-        // Auto-scroll toggle (⌘⌃Space)
+        // Auto-scroll toggle (⌘A)
         if preferences.isShortcutEnabled(Constants.SettingKeys.Shortcuts.autoScroll) {
-        autoScrollHotKey = HotKey(key: .space, modifiers: [.command, .control])
+        autoScrollHotKey = HotKey(key: .a, modifiers: [.command])
         autoScrollHotKey?.keyDownHandler = {
             handler.toggleAutoScroll()
             }
@@ -322,17 +322,17 @@ final class HotKeyManager: ObservableObject {
             }
         }
         
-        // Scroll up (⌘⌃↑)
+        // Scroll up (⌘↑)
         if preferences.isShortcutEnabled(Constants.SettingKeys.Shortcuts.scrollUp) {
-        scrollUpHotKey = HotKey(key: .upArrow, modifiers: [.command, .control])
+        scrollUpHotKey = HotKey(key: .upArrow, modifiers: [.command])
         scrollUpHotKey?.keyDownHandler = {
             handler.scrollResults(direction: .up)
             }
         }
         
-        // Scroll down (⌘⌃↓)
+        // Scroll down (⌘↓)
         if preferences.isShortcutEnabled(Constants.SettingKeys.Shortcuts.scrollDown) {
-        scrollDownHotKey = HotKey(key: .downArrow, modifiers: [.command, .control])
+        scrollDownHotKey = HotKey(key: .downArrow, modifiers: [.command])
         scrollDownHotKey?.keyDownHandler = {
             handler.scrollResults(direction: .down)
             }

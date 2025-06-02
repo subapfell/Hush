@@ -158,6 +158,36 @@ struct TranscriptView: View {
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
         .accessibilityHint(isRecording ? "Currently recording audio" : "Recording paused")
+        .onKeyPress(.space, modifiers: [.command, .control]) {
+            // Toggle auto-scroll
+            isAutoScrollEnabled.toggle()
+            if isAutoScrollEnabled, let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+            }
+            return .handled
+        }
+        .onKeyPress(.upArrow, modifiers: [.command, .control]) {
+            // Scroll to top
+            if let proxy = scrollProxy {
+                isAutoScrollEnabled = false
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .top)
+                }
+            }
+            return .handled
+        }
+        .onKeyPress(.downArrow, modifiers: [.command, .control]) {
+            // Scroll to bottom and enable auto-scroll
+            if let proxy = scrollProxy {
+                isAutoScrollEnabled = true
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+            }
+            return .handled
+        }
     }
 }
 
