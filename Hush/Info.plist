@@ -4,5 +4,11 @@
 <dict>
 	<key>NSAudioCaptureUsageDescription</key>
 	<string>Please allow access in order to capture audio from other apps.</string>
+	<key>NSSystemAudioCaptureUsageDescription</key>
+	<string>This app needs access to system audio to capture and transcribe audio from other applications.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access is needed to record and transcribe audio.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition is used to transcribe audio recordings.</string>
 </dict>
 </plist>

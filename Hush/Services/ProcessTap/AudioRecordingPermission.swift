@@ -33,7 +33,9 @@ final class AudioRecordingPermission {
         logger.debug(#function)
 
         guard let request = Self.requestSPI else {
-            logger.fault("Request SPI missing")
+            logger.fault("Request SPI missing - TCC framework may not be available")
+            // Fallback to showing system preferences
+            showSystemPreferences()
             return
         }
 
@@ -50,7 +52,26 @@ final class AudioRecordingPermission {
                 }
             }
         }
+        #else
+        logger.debug("TCC SPI not enabled, showing system preferences")
+        showSystemPreferences()
         #endif // ENABLE_TCC_SPI
+    }
+    
+    private func showSystemPreferences() {
+        DispatchQueue.main.async {
+            let alert = NSAlert()
+            alert.messageText = "Audio Recording Permission Required"
+            alert.informativeText = "Please grant audio recording permission in System Preferences > Security & Privacy > Privacy > Microphone."
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "Open System Preferences")
+            alert.addButton(withTitle: "Cancel")
+            
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!)
+            }
+        }
     }
 
     private func updateStatus() {
