@@ -157,7 +157,7 @@ struct TranscriptView: View {
                                         .font(.caption.bold())
                                         .foregroundColor(.blue)
                                     
-                                    Text(" • Force auto: ")
+                                    Text(" • Toggle: ")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                     
@@ -183,13 +183,8 @@ struct TranscriptView: View {
             return .handled
         }
         .onKeyPress(.space, modifiers: [.command, .shift]) {
-            // Command+Shift+Space: Force enable auto-scroll and scroll to bottom
-            isAutoScrollEnabled = true
-            if let proxy = scrollProxy {
-                withAnimation(.easeOut(duration: 0.3)) {
-                    proxy.scrollTo("transcriptText", anchor: .bottom)
-                }
-            }
+            // Command+Shift+Space: Toggle auto-scroll mode (AUTO ↔ MANUAL)
+            isAutoScrollEnabled.toggle()
             return .handled
         }
         .onKeyPress(.upArrow, modifiers: .command) {
@@ -203,12 +198,11 @@ struct TranscriptView: View {
             return .handled
         }
         .onKeyPress(.upArrow, modifiers: [.command, .shift]) {
-            // Command+Shift+Up: Scroll to top and force disable auto-scroll
+            // Command+Shift+Up: Scroll to top of transcript
             if let proxy = scrollProxy {
                 withAnimation(.easeOut(duration: 0.5)) {
                     proxy.scrollTo("transcriptText", anchor: .top)
                 }
-                isAutoScrollEnabled = false
             }
             return .handled
         }
@@ -223,12 +217,12 @@ struct TranscriptView: View {
             return .handled
         }
         .onKeyPress(.downArrow, modifiers: [.command, .shift]) {
-            // Command+Shift+Down: Scroll to bottom without changing auto-scroll state
+            // Command+Shift+Down: Scroll to bottom and enable auto-scroll
             if let proxy = scrollProxy {
                 withAnimation(.easeOut(duration: 0.5)) {
                     proxy.scrollTo("transcriptText", anchor: .bottom)
                 }
-                // Keep current auto-scroll state unchanged
+                isAutoScrollEnabled = true
             }
             return .handled
         }

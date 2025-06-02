@@ -106,13 +106,13 @@ Button(action: {
 
 ### Auto-Scroll Control
 - **⌘Space**: Toggle auto-scroll mode (AUTO ↔ MANUAL)
-- **⌘⇧Space**: Force enable auto-scroll and scroll to bottom
+- **⌘⇧Space**: Toggle auto-scroll mode (AUTO ↔ MANUAL)
 
 ### Manual Scrolling
 - **⌘↑**: Scroll to top of transcript (disables auto-scroll)
-- **⌘⇧↑**: Scroll to top of transcript (force disable auto-scroll)
+- **⌘⇧↑**: Scroll to top of transcript
 - **⌘↓**: Scroll to bottom of transcript (enables auto-scroll)
-- **⌘⇧↓**: Scroll to bottom of transcript (preserves auto-scroll state)
+- **⌘⇧↓**: Scroll to bottom and enable auto-scroll
 - **↑**: Scroll up by line (approximate)
 - **↓**: Scroll down by line (approximate)
 - **Page Up**: Scroll up by page (to top)
@@ -120,10 +120,9 @@ Button(action: {
 
 ### Behavior Notes
 - Most manual scrolling actions automatically disable auto-scroll
-- **⌘↓**: Scrolls to bottom AND enables auto-scroll
-- **⌘⇧↓**: Scrolls to bottom WITHOUT changing auto-scroll state
-- **⌘⇧Space**: Force enables auto-scroll regardless of current state
-- **⌘⇧↑**: Explicit top navigation with auto-scroll force disabled
+- **⌘↓** and **⌘⇧↓**: Both scroll to bottom AND enable auto-scroll
+- **⌘Space** and **⌘⇧Space**: Both toggle auto-scroll mode
+- **⌘⇧↑**: Scrolls to top without affecting auto-scroll state
 - Keyboard shortcuts work when the transcript view has focus
 - Visual tooltip shows ⌘Space shortcut on hover over toggle button
 
@@ -134,14 +133,13 @@ Button(action: {
 - Validate smooth animations and visual feedback
 - Ensure accessibility features remain functional
 - **Test keyboard shortcuts:**
-  - ⌘Space toggles auto-scroll mode
-  - ⌘⇧Space force enables auto-scroll
-  - ⌘↑/⌘⇧↑ scroll to top (different auto-scroll behaviors)
-  - ⌘↓/⌘⇧↓ scroll to bottom (different auto-scroll behaviors)
+  - ⌘Space and ⌘⇧Space both toggle auto-scroll mode
+  - ⌘↑ scrolls to top and disables auto-scroll
+  - ⌘⇧↑ scrolls to top without affecting auto-scroll state
+  - ⌘↓ and ⌘⇧↓ both scroll to bottom and enable auto-scroll
   - Arrow keys provide line-by-line scrolling
   - Page Up/Down provide page scrolling
-  - Manual scrolling disables auto-scroll (except ⌘⇧↓)
-  - Different bottom scroll behaviors (⌘↓ vs ⌘⇧↓)
+  - Manual scrolling disables auto-scroll (except bottom commands)
   - Tooltip appears on button hover
 
 ## Files Modified
@@ -152,11 +150,11 @@ Button(action: {
 | Shortcut | Action | Auto-Scroll Effect |
 |----------|--------|-------------------|
 | **⌘Space** | Toggle auto-scroll mode | Toggles ON/OFF |
-| **⌘⇧Space** | Force enable auto-scroll + scroll to bottom | Forces ON |
+| **⌘⇧Space** | Toggle auto-scroll mode | Toggles ON/OFF |
 | **⌘↑** | Scroll to top | Disables |
-| **⌘⇧↑** | Scroll to top (force disable) | Forces OFF |
+| **⌘⇧↑** | Scroll to top | No change |
 | **⌘↓** | Scroll to bottom | Enables |
-| **⌘⇧↓** | Scroll to bottom (preserve state) | No change |
+| **⌘⇧↓** | Scroll to bottom | Enables |
 | **↑** | Scroll up by line | Disables |
 | **↓** | Scroll down by line | Disables |
 | **Page Up** | Scroll to top | Disables |
