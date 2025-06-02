@@ -99,7 +99,7 @@ struct TranscriptView: View {
                                     .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .help("Toggle auto-scroll (⌘A)")
+                                .help("Toggle auto-scroll (⌘⌃Space)")
                                 .padding(.trailing, 8)
                                 .padding(.bottom, 8)
                             }
@@ -135,7 +135,7 @@ struct TranscriptView: View {
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘A")
+                                Text("⌘⌃Space")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                                 
@@ -143,7 +143,7 @@ struct TranscriptView: View {
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘↑/↓")
+                                Text("⌘⌃↑/↓")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
