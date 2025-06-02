@@ -104,27 +104,21 @@ Button(action: {
 
 ## Keyboard Shortcuts
 
+Only three Shift key combinations are supported:
+
 ### Auto-Scroll Control
-- **⌘Space**: Toggle auto-scroll mode (AUTO ↔ MANUAL)
 - **⌘⇧Space**: Toggle auto-scroll mode (AUTO ↔ MANUAL)
 
 ### Manual Scrolling
-- **⌘↑**: Scroll to top of transcript (disables auto-scroll)
 - **⌘⇧↑**: Scroll to top of transcript
-- **⌘↓**: Scroll to bottom of transcript (enables auto-scroll)
 - **⌘⇧↓**: Scroll to bottom and enable auto-scroll
-- **↑**: Scroll up by line (approximate)
-- **↓**: Scroll down by line (approximate)
-- **Page Up**: Scroll up by page (to top)
-- **Page Down**: Scroll down by page (to bottom)
 
 ### Behavior Notes
-- Most manual scrolling actions automatically disable auto-scroll
-- **⌘↓** and **⌘⇧↓**: Both scroll to bottom AND enable auto-scroll
-- **⌘Space** and **⌘⇧Space**: Both toggle auto-scroll mode
-- **⌘⇧↑**: Scrolls to top without affecting auto-scroll state
+- **⌘⇧Space**: Toggles auto-scroll mode between AUTO and MANUAL
+- **⌘⇧↑**: Scrolls to top without affecting current auto-scroll state
+- **⌘⇧↓**: Scrolls to bottom AND enables auto-scroll
 - Keyboard shortcuts work when the transcript view has focus
-- Visual tooltip shows ⌘Space shortcut on hover over toggle button
+- Visual tooltip shows ⌘⇧Space shortcut on hover over toggle button
 
 ## Testing
 - Verify manual scrolling works in both directions
@@ -133,14 +127,10 @@ Button(action: {
 - Validate smooth animations and visual feedback
 - Ensure accessibility features remain functional
 - **Test keyboard shortcuts:**
-  - ⌘Space and ⌘⇧Space both toggle auto-scroll mode
-  - ⌘↑ scrolls to top and disables auto-scroll
+  - ⌘⇧Space toggles auto-scroll mode
   - ⌘⇧↑ scrolls to top without affecting auto-scroll state
-  - ⌘↓ and ⌘⇧↓ both scroll to bottom and enable auto-scroll
-  - Arrow keys provide line-by-line scrolling
-  - Page Up/Down provide page scrolling
-  - Manual scrolling disables auto-scroll (except bottom commands)
-  - Tooltip appears on button hover
+  - ⌘⇧↓ scrolls to bottom and enables auto-scroll
+  - Tooltip appears on button hover showing ⌘⇧Space
 
 ## Files Modified
 - `Hush/Features/Main/Components/TranscriptView.swift`: Complete scrolling behavior overhaul
@@ -149,16 +139,9 @@ Button(action: {
 
 | Shortcut | Action | Auto-Scroll Effect |
 |----------|--------|-------------------|
-| **⌘Space** | Toggle auto-scroll mode | Toggles ON/OFF |
 | **⌘⇧Space** | Toggle auto-scroll mode | Toggles ON/OFF |
-| **⌘↑** | Scroll to top | Disables |
 | **⌘⇧↑** | Scroll to top | No change |
-| **⌘↓** | Scroll to bottom | Enables |
 | **⌘⇧↓** | Scroll to bottom | Enables |
-| **↑** | Scroll up by line | Disables |
-| **↓** | Scroll down by line | Disables |
-| **Page Up** | Scroll to top | Disables |
-| **Page Down** | Scroll to bottom | Disables |
 
 ## Compatibility
 - Maintains existing API compatibility
