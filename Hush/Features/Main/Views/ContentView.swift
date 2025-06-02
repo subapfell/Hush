@@ -11,6 +11,9 @@ struct ContentView: View {
     /// The shared app state
     @ObservedObject private var appState: AppState
     
+    /// Current dynamic height of the transcript view
+    @State private var transcriptHeight: CGFloat = Constants.UI.transcriptViewHeight
+    
     // MARK: - Initialization
     
     /// Initializes the content view with optional app state
@@ -45,7 +48,10 @@ struct ContentView: View {
                         transcript: appState.transcriptText,
                         isRecording: appState.isTranscribing,
                         hasScreenshots: !appState.capturedImages.isEmpty,
-                        isAutoScrollEnabled: $appState.isAutoScrollEnabled
+                        isAutoScrollEnabled: $appState.isAutoScrollEnabled,
+                        onHeightChange: { height in
+                            transcriptHeight = height
+                        }
                     )
                     .transition(.opacity)
                     
@@ -318,7 +324,7 @@ extension View {
         }
         
         if showTranscript {
-            totalHeight += Constants.UI.transcriptViewHeight
+            totalHeight += transcriptHeight
             visibleComponents += 1
         }
         
@@ -336,7 +342,7 @@ extension View {
                 let _ = Constants.UI.toolbarHeight + 
                       (isChatActive ? Constants.UI.chatInputHeight : 0) +
                       (hasScreenshots ? Constants.UI.screenshotViewHeight : 0) +
-                      Constants.UI.transcriptViewHeight +
+                      transcriptHeight +
                       (CGFloat(visibleComponents) * Constants.UI.dividerHeight)
                 
                 // Use at least the default height, but don't exceed max height

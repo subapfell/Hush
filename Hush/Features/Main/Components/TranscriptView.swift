@@ -15,11 +15,42 @@ struct TranscriptView: View {
     /// Whether auto-scroll is enabled
     @Binding var isAutoScrollEnabled: Bool
     
+    /// Callback to notify parent of height changes
+    let onHeightChange: ((CGFloat) -> Void)?
+    
     /// Previous transcript length to detect new content
     @State private var previousTranscriptLength: Int = 0
     
     /// ScrollViewReader proxy for programmatic scrolling
     @State private var scrollProxy: ScrollViewProxy?
+    
+    /// Dynamic height based on content
+    @State private var contentHeight: CGFloat = Constants.UI.transcriptViewHeight
+    
+    /// Updates the content height based on text content
+    private func updateContentHeight() {
+        let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        let attributes = [NSAttributedString.Key.font: font]
+        let attributedString = NSAttributedString(string: transcript, attributes: attributes)
+        
+        // Calculate the width available for text (accounting for padding)
+        let availableWidth = 400.0 - 32.0 // Assuming reasonable width minus horizontal padding
+        
+        let boundingRect = attributedString.boundingRect(
+            with: CGSize(width: availableWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading]
+        )
+        
+        // Add padding (top + bottom) and some extra space for the hint text
+        let calculatedHeight = boundingRect.height + 24 + 40 // 12 top + 12 bottom padding + hint text area
+        
+        // Use minimum height or calculated height, whichever is larger
+        let newHeight = max(Constants.UI.transcriptViewHeight, calculatedHeight)
+        contentHeight = newHeight
+        
+        // Notify parent of height change
+        onHeightChange?(min(newHeight, 300))
+    }
     
     var body: some View {
         ZStack {
@@ -48,8 +79,13 @@ struct TranscriptView: View {
                             .onAppear {
                                 // Store the scroll proxy for keyboard shortcuts
                                 scrollProxy = proxy
+                                // Calculate initial content height
+                                updateContentHeight()
                             }
                             .onChange(of: transcript) {
+                                // Update content height when transcript changes
+                                updateContentHeight()
+                                
                                 // Only auto-scroll if enabled and new content was added
                                 let newLength = transcript.count
                                 if isAutoScrollEnabled && newLength > previousTranscriptLength {
@@ -74,35 +110,6 @@ struct TranscriptView: View {
                                         isAutoScrollEnabled = false
                                     }
                             )
-                        }
-                        
-                        // Auto-scroll control button (bottom right)
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                
-                                Button(action: {
-                                    isAutoScrollEnabled.toggle()
-                                }) {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: isAutoScrollEnabled ? "arrow.down.doc.fill" : "arrow.down.doc")
-                                            .font(.system(size: 10))
-                                        
-                                        Text(isAutoScrollEnabled ? "AUTO" : "MANUAL")
-                                            .font(.system(size: 9, weight: .medium))
-                                    }
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 4)
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(4)
-                                    .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .help("Toggle auto-scroll (⌘⌃Space)")
-                                .padding(.trailing, 8)
-                                .padding(.bottom, 8)
-                            }
                         }
                     }
                     
@@ -131,19 +138,19 @@ struct TranscriptView: View {
                             
                             // Keyboard shortcuts hint
                             HStack(spacing: 0) {
-                                Text("Auto-scroll: ")
+                                Text("Scroll to top: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⌃Space")
+                                Text("⇧↑")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                                 
-                                Text(" • Scroll: ")
+                                Text(" • Scroll to bottom: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⌃↑/↓")
+                                Text("⇧↓")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
@@ -153,7 +160,7 @@ struct TranscriptView: View {
                 }
             }
         }
-        .frame(height: Constants.UI.transcriptViewHeight)
+        .frame(height: min(contentHeight, 300))
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
@@ -182,6 +189,7 @@ struct TranscriptView: View {
         transcript: "This is a sample transcript of what the speech recognition might capture. It demonstrates how the text would appear in the transcript view. This is a longer text to show the scrolling behavior when there's more content than can fit in the view. Users can now scroll up and down manually, and control whether new content automatically scrolls to the bottom.",
         isRecording: true,
         hasScreenshots: true,
-        isAutoScrollEnabled: $isAutoScrollEnabled
+        isAutoScrollEnabled: $isAutoScrollEnabled,
+        onHeightChange: nil
     )
 }

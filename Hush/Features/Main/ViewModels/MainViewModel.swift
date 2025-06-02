@@ -973,16 +973,6 @@ final class MainViewModel: ObservableObject, HotKeyActionHandler {
         }
     }
     
-    /// Toggles auto-scroll in transcript viewer
-    func toggleTranscriptAutoScroll() {
-        appState.isAutoScrollEnabled.toggle()
-        
-        // If auto-scroll is enabled, scroll to bottom
-        if appState.isAutoScrollEnabled {
-            NotificationCenter.default.post(name: .scrollTranscriptToBottom, object: nil)
-        }
-    }
-    
     /// Scrolls transcript to top and disables auto-scroll
     func scrollTranscriptToTop() {
         appState.isAutoScrollEnabled = false

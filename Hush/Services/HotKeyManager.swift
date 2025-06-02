@@ -83,9 +83,6 @@ protocol HotKeyActionHandler {
     /// Toggles between microphone and system audio sources
     func toggleAudioSource()
     
-    /// Toggles auto-scroll in transcript viewer
-    func toggleTranscriptAutoScroll()
-    
     /// Scrolls transcript to top and disables auto-scroll
     func scrollTranscriptToTop()
     
@@ -143,7 +140,6 @@ final class HotKeyManager: ObservableObject {
     private var toggleAudioSourceHotKey: HotKey?
     
     // Transcript viewer specific hotkeys
-    private var transcriptAutoScrollHotKey: HotKey?
     private var transcriptScrollTopHotKey: HotKey?
     private var transcriptScrollBottomHotKey: HotKey?
     
@@ -212,7 +208,6 @@ final class HotKeyManager: ObservableObject {
         toggleAudioSourceHotKey = nil
         
         // Transcript viewer hotkeys
-        transcriptAutoScrollHotKey = nil
         transcriptScrollTopHotKey = nil
         transcriptScrollBottomHotKey = nil
     }
@@ -362,20 +357,14 @@ final class HotKeyManager: ObservableObject {
     /// Sets up transcript viewer specific hotkeys
     /// - Parameter handler: The action handler
     private func setupTranscriptHotKeys(handler: HotKeyActionHandler) {
-        // Toggle auto-scroll in transcript (⌘⌃Space)
-        transcriptAutoScrollHotKey = HotKey(key: .space, modifiers: [.command, .control])
-        transcriptAutoScrollHotKey?.keyDownHandler = {
-            handler.toggleTranscriptAutoScroll()
-        }
-        
-        // Scroll transcript to top (⌘⌃↑)
-        transcriptScrollTopHotKey = HotKey(key: .upArrow, modifiers: [.command, .control])
+        // Scroll transcript to top and disable auto-scroll (Shift+↑)
+        transcriptScrollTopHotKey = HotKey(key: .upArrow, modifiers: [.shift])
         transcriptScrollTopHotKey?.keyDownHandler = {
             handler.scrollTranscriptToTop()
         }
         
-        // Scroll transcript to bottom (⌘⌃↓)
-        transcriptScrollBottomHotKey = HotKey(key: .downArrow, modifiers: [.command, .control])
+        // Scroll transcript to bottom and enable auto-scroll (Shift+↓)
+        transcriptScrollBottomHotKey = HotKey(key: .downArrow, modifiers: [.shift])
         transcriptScrollBottomHotKey?.keyDownHandler = {
             handler.scrollTranscriptToBottom()
         }
