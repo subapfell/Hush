@@ -183,7 +183,7 @@ struct TranscriptView: View {
 }
 
 #Preview {
-    @State var isAutoScrollEnabled = true
+    @Previewable @State var isAutoScrollEnabled = true
     
     return TranscriptView(
         transcript: "This is a sample transcript of what the speech recognition might capture. It demonstrates how the text would appear in the transcript view. This is a longer text to show the scrolling behavior when there's more content than can fit in the view. Users can now scroll up and down manually, and control whether new content automatically scrolls to the bottom.",
