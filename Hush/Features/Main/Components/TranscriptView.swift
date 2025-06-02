@@ -98,7 +98,7 @@ struct TranscriptView: View {
                                     .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .help("Toggle auto-scroll (⌘⇧Space)")
+                                .help("Toggle auto-scroll (⌘A)")
                                 .padding(.trailing, 8)
                                 .padding(.bottom, 8)
                             }
@@ -130,19 +130,19 @@ struct TranscriptView: View {
                             
                             // Keyboard shortcuts hint
                             HStack(spacing: 0) {
-                                Text("Shortcuts: ")
+                                Text("Auto-scroll: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⇧Space")
+                                Text("⌘A")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                                 
-                                Text(" • ")
+                                Text(" • Scroll: ")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 
-                                Text("⌘⇧↑/↓")
+                                Text("⌘↑/↓")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
@@ -157,30 +157,6 @@ struct TranscriptView: View {
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
         .accessibilityHint(isRecording ? "Currently recording audio" : "Recording paused")
-        .onKeyPress(.space, modifiers: [.command, .shift]) {
-            // Command+Shift+Space: Toggle auto-scroll mode (AUTO ↔ MANUAL)
-            isAutoScrollEnabled.toggle()
-            return .handled
-        }
-        .onKeyPress(.upArrow, modifiers: [.command, .shift]) {
-            // Command+Shift+Up: Scroll to top of transcript
-            if let proxy = scrollProxy {
-                withAnimation(.easeOut(duration: 0.5)) {
-                    proxy.scrollTo("transcriptText", anchor: .top)
-                }
-            }
-            return .handled
-        }
-        .onKeyPress(.downArrow, modifiers: [.command, .shift]) {
-            // Command+Shift+Down: Scroll to bottom and enable auto-scroll
-            if let proxy = scrollProxy {
-                withAnimation(.easeOut(duration: 0.5)) {
-                    proxy.scrollTo("transcriptText", anchor: .bottom)
-                }
-                isAutoScrollEnabled = true
-            }
-            return .handled
-        }
     }
 }
 
