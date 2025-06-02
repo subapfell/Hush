@@ -103,14 +103,21 @@ struct ContentView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
-        .configureWindow(
-            isChatActive: $appState.isChatActive, 
-            showResults: $appState.showResults, 
-            hasScreenshots: !appState.capturedImages.isEmpty,
-            showTranscript: $appState.showTranscript
-        )
+        .onChange(of: appState.isChatActive) {
+            configureWindowSize(isChatActive: appState.isChatActive, showResults: appState.showResults, hasScreenshots: !appState.capturedImages.isEmpty, showTranscript: appState.showTranscript)
+        }
+        .onChange(of: appState.showResults) {
+            configureWindowSize(isChatActive: appState.isChatActive, showResults: appState.showResults, hasScreenshots: !appState.capturedImages.isEmpty, showTranscript: appState.showTranscript)
+        }
+        .onChange(of: appState.showTranscript) {
+            configureWindowSize(isChatActive: appState.isChatActive, showResults: appState.showResults, hasScreenshots: !appState.capturedImages.isEmpty, showTranscript: appState.showTranscript)
+        }
+        .onChange(of: transcriptHeight) {
+            configureWindowSize(isChatActive: appState.isChatActive, showResults: appState.showResults, hasScreenshots: !appState.capturedImages.isEmpty, showTranscript: appState.showTranscript)
+        }
         .onAppear {
             viewModel.setupHotKeys()
+            configureWindowSize(isChatActive: appState.isChatActive, showResults: appState.showResults, hasScreenshots: !appState.capturedImages.isEmpty, showTranscript: appState.showTranscript)
         }
         .onDisappear {
             viewModel.cleanup()
@@ -264,37 +271,8 @@ struct ContentView: View {
         }
         .frame(height: Constants.UI.chatInputHeight)
     }
-}
-
-// MARK: - Window Configuration
-
-extension View {
-    /// Configures the window based on the current state
-    /// - Parameters:
-    ///   - isChatActive: Whether chat is active
-    ///   - showResults: Whether results are shown
-    ///   - hasScreenshots: Whether screenshots are being displayed
-    ///   - showTranscript: Whether the transcript is being shown
-    /// - Returns: Modified view
-    func configureWindow(
-        isChatActive: Binding<Bool>,
-        showResults: Binding<Bool>,
-        hasScreenshots: Bool = false,
-        showTranscript: Binding<Bool>
-    ) -> some View {
-        self.onChange(of: isChatActive.wrappedValue) {
-            configureWindowSize(isChatActive: isChatActive.wrappedValue, showResults: showResults.wrappedValue, hasScreenshots: hasScreenshots, showTranscript: showTranscript.wrappedValue)
-        }
-        .onChange(of: showResults.wrappedValue) {
-            configureWindowSize(isChatActive: isChatActive.wrappedValue, showResults: showResults.wrappedValue, hasScreenshots: hasScreenshots, showTranscript: showTranscript.wrappedValue)
-        }
-        .onChange(of: showTranscript.wrappedValue) {
-            configureWindowSize(isChatActive: isChatActive.wrappedValue, showResults: showResults.wrappedValue, hasScreenshots: hasScreenshots, showTranscript: showTranscript.wrappedValue)
-        }
-        .onAppear {
-            configureWindowSize(isChatActive: isChatActive.wrappedValue, showResults: showResults.wrappedValue, hasScreenshots: hasScreenshots, showTranscript: showTranscript.wrappedValue)
-        }
-    }
+    
+    // MARK: - Window Configuration
     
     /// Helper to calculate and set the window size
     /// - Parameters:
@@ -358,25 +336,23 @@ extension View {
         let dividerCount = visibleComponents > 0 ? visibleComponents : 0
         totalHeight += CGFloat(dividerCount) * Constants.UI.dividerHeight
         
-        // Get the current window frame
+        // Add some padding for window chrome and ensure minimum height
+        let minHeight: CGFloat = 200
+        let finalHeight = max(minHeight, totalHeight + 40) // 40 for window chrome
+        
+        // Get current window frame
         let currentFrame = window.frame
         
-        // Calculate the y-coordinate to maintain top position of window
-        // This is the most critical part to ensure window grows/shrinks from bottom
-        let topEdgeY = currentFrame.maxY
-        let newY = topEdgeY - totalHeight
-        
-        // Create the new frame maintaining the same top position
+        // Calculate new frame (keep same width and position, just change height)
         let newFrame = NSRect(
             x: currentFrame.origin.x,
-            y: newY,
-            width: Constants.UI.windowWidth,
-            height: totalHeight
+            y: currentFrame.origin.y + (currentFrame.height - finalHeight), // Adjust y to keep top-left corner
+            width: currentFrame.width,
+            height: finalHeight
         )
         
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = Constants.Animation.standard
-            context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        // Animate the window resize
+        if newFrame != currentFrame {
             window.animator().setFrame(newFrame, display: true)
         }
         
