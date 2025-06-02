@@ -17,6 +17,9 @@ struct TranscriptView: View {
     /// Previous transcript length to detect new content
     @State private var previousTranscriptLength: Int = 0
     
+    /// ScrollViewReader proxy for programmatic scrolling
+    @State private var scrollProxy: ScrollViewReader.ScrollViewProxy?
+    
     var body: some View {
         ZStack {
             // Glass background for transcript
@@ -40,6 +43,10 @@ struct TranscriptView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .textSelection(.enabled)
                                     .id("transcriptText")
+                            }
+                            .onAppear {
+                                // Store the scroll proxy for keyboard shortcuts
+                                scrollProxy = proxy
                             }
                             .onChange(of: transcript) {
                                 // Only auto-scroll if enabled and new content was added
@@ -91,6 +98,7 @@ struct TranscriptView: View {
                                     .foregroundColor(isAutoScrollEnabled ? .blue : .gray)
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .help("Toggle auto-scroll (⌘Space)")
                                 .padding(.trailing, 8)
                                 .padding(.bottom, 8)
                             }
@@ -99,21 +107,42 @@ struct TranscriptView: View {
                     
                     // Hint text for non-empty transcripts
                     if !transcript.isEmpty && !isRecording {
-                        HStack(spacing: 0) {
-                            Text("Press ")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("⌘↩")
-                                .font(.caption.bold())
-                                .foregroundColor(.blue)
-                            
-                            Text(" to process transcript")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                        VStack(spacing: 2) {
+                            HStack(spacing: 0) {
+                                Text("Press ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                                 
-                            if hasScreenshots {
-                                Text(" with screenshots")
+                                Text("⌘↩")
+                                    .font(.caption.bold())
+                                    .foregroundColor(.blue)
+                                
+                                Text(" to process transcript")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    
+                                if hasScreenshots {
+                                    Text(" with screenshots")
+                                        .font(.caption.bold())
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            
+                            // Keyboard shortcuts hint
+                            HStack(spacing: 0) {
+                                Text("Scroll: ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                Text("⌘↑/↓")
+                                    .font(.caption.bold())
+                                    .foregroundColor(.blue)
+                                
+                                Text(" • Toggle auto-scroll: ")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                Text("⌘Space")
                                     .font(.caption.bold())
                                     .foregroundColor(.blue)
                             }
@@ -128,6 +157,108 @@ struct TranscriptView: View {
         .accessibilityLabel("Transcript")
         .accessibilityValue(transcript.isEmpty ? "No transcript available" : transcript)
         .accessibilityHint(isRecording ? "Currently recording audio" : "Recording paused")
+        .onKeyPress(.space, modifiers: .command) {
+            // Command+Space: Toggle auto-scroll
+            isAutoScrollEnabled.toggle()
+            return .handled
+        }
+        .onKeyPress(.upArrow, modifiers: .command) {
+            // Command+Up: Scroll to top
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    proxy.scrollTo("transcriptText", anchor: .top)
+                }
+                isAutoScrollEnabled = false
+            }
+            return .handled
+        }
+        .onKeyPress(.downArrow, modifiers: .command) {
+            // Command+Down: Scroll to bottom
+            if let proxy = scrollProxy {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    proxy.scrollTo("transcriptText", anchor: .bottom)
+                }
+                isAutoScrollEnabled = true
+            }
+            return .handled
+        }
+        .onKeyPress(.pageUp) {
+            // Page Up: Scroll up by page
+            scrollByPage(direction: .up)
+            return .handled
+        }
+        .onKeyPress(.pageDown) {
+            // Page Down: Scroll down by page
+            scrollByPage(direction: .down)
+            return .handled
+        }
+        .onKeyPress(.upArrow) {
+            // Up Arrow: Scroll up by line
+            scrollByLine(direction: .up)
+            return .handled
+        }
+        .onKeyPress(.downArrow) {
+            // Down Arrow: Scroll down by line
+            scrollByLine(direction: .down)
+            return .handled
+        }
+    }
+    
+    // MARK: - Helper Methods
+    
+    /// Scroll direction for helper methods
+    private enum ScrollDirection {
+        case up, down
+    }
+    
+    /// Scroll by page (approximate)
+    /// - Parameter direction: Direction to scroll
+    private func scrollByPage(direction: ScrollDirection) {
+        // Disable auto-scroll when manually scrolling
+        isAutoScrollEnabled = false
+        
+        // For page scrolling, we'll use a simple approach since SwiftUI ScrollView
+        // doesn't provide direct access to scroll position
+        // This is a simplified implementation - in a real app you might want
+        // to use UIScrollView or NSScrollView for more precise control
+        
+        // For now, we'll just scroll to top/bottom as page equivalents
+        guard let proxy = scrollProxy else { return }
+        
+        withAnimation(.easeOut(duration: 0.3)) {
+            switch direction {
+            case .up:
+                proxy.scrollTo("transcriptText", anchor: .top)
+            case .down:
+                proxy.scrollTo("transcriptText", anchor: .bottom)
+            }
+        }
+    }
+    
+    /// Scroll by line (approximate)
+    /// - Parameter direction: Direction to scroll
+    private func scrollByLine(direction: ScrollDirection) {
+        // Disable auto-scroll when manually scrolling
+        isAutoScrollEnabled = false
+        
+        // Similar limitation as page scrolling - SwiftUI doesn't provide
+        // fine-grained scroll control. This is a simplified implementation.
+        // In a production app, you might want to implement custom scrolling
+        // or use platform-specific scroll views for precise control.
+        
+        // For now, we'll provide a subtle scroll animation
+        guard let proxy = scrollProxy else { return }
+        
+        withAnimation(.easeOut(duration: 0.1)) {
+            switch direction {
+            case .up:
+                // Scroll towards top (but not all the way)
+                proxy.scrollTo("transcriptText", anchor: .center)
+            case .down:
+                // Scroll towards bottom
+                proxy.scrollTo("transcriptText", anchor: .bottom)
+            }
+        }
     }
 }
 

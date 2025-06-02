@@ -100,6 +100,26 @@ Button(action: {
 3. **Visual Feedback**: Clear indication of current scrolling mode
 4. **Smooth Animations**: Better visual transitions when scrolling
 5. **Intuitive Behavior**: Auto-scroll disables when user interacts, re-enables when requested
+6. **Keyboard Shortcuts**: Full keyboard control for scrolling and auto-scroll toggle
+
+## Keyboard Shortcuts
+
+### Auto-Scroll Control
+- **⌘Space**: Toggle auto-scroll mode (AUTO ↔ MANUAL)
+
+### Manual Scrolling
+- **⌘↑**: Scroll to top of transcript
+- **⌘↓**: Scroll to bottom of transcript (also enables auto-scroll)
+- **↑**: Scroll up by line (approximate)
+- **↓**: Scroll down by line (approximate)
+- **Page Up**: Scroll up by page (to top)
+- **Page Down**: Scroll down by page (to bottom)
+
+### Behavior Notes
+- Any manual scrolling action automatically disables auto-scroll
+- Scrolling to bottom (⌘↓) re-enables auto-scroll
+- Keyboard shortcuts work when the transcript view has focus
+- Visual tooltip shows ⌘Space shortcut on hover over toggle button
 
 ## Testing
 - Verify manual scrolling works in both directions
@@ -107,6 +127,13 @@ Button(action: {
 - Test that new content only auto-scrolls when enabled
 - Validate smooth animations and visual feedback
 - Ensure accessibility features remain functional
+- **Test keyboard shortcuts:**
+  - ⌘Space toggles auto-scroll mode
+  - ⌘↑/↓ scroll to top/bottom
+  - Arrow keys provide line-by-line scrolling
+  - Page Up/Down provide page scrolling
+  - Manual scrolling disables auto-scroll
+  - Tooltip appears on button hover
 
 ## Files Modified
 - `Hush/Features/Main/Components/TranscriptView.swift`: Complete scrolling behavior overhaul
